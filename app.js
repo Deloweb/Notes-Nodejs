@@ -67,7 +67,11 @@ yargs
           }
       },
       handler: (argv) => {
-          let table = [...loadDatas('./datas/notes.json').filter(argv.title)];
+          let table = [...loadDatas('./datas/notes.json').filter((note) => note.title !== argv.title)];
+          console.log(table);
+          fs.writeFile('./datas/notes.json', JSON.stringify(table), err => {
+              if(err) throw err;
+          })
       }
   })
   .argv;
