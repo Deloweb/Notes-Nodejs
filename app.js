@@ -31,9 +31,9 @@ yargs
       let test = notesList.map((note) => {
         if (argv.title === note.title) {
           let isAlreadyHere = 1;
-          return isAlreadyHere
+          return isAlreadyHere;
         }
-    });
+      });
       if (test.includes(1)) {
         console.log("Cette note a déjà été ajoutée");
       } else
@@ -53,25 +53,47 @@ yargs
     describe: "Affiche les titres de toutes les notes",
     handler: (argv) => {
       let notes = loadDatas("./datas/notes.json");
-      console.log(notes);
+      notes.forEach(note => {console.log(`title:`, note.title)});
     },
   })
   .command({
-      command: "remove",
-      describe: "Supprime une note de la liste",
-      builder:{
-          title: {
-              describe: "Titre de la note à supprimer",
-              demandOption: true,
-              type: "string"
-          }
+    command: "remove",
+    describe: "Supprime une note de la liste",
+    builder: {
+      title: {
+        describe: "Titre de la note à supprimer",
+        demandOption: true,
+        type: "string",
       },
-      handler: (argv) => {
-          let table = [...loadDatas('./datas/notes.json').filter((note) => note.title !== argv.title)];
-          console.log(table);
-          fs.writeFile('./datas/notes.json', JSON.stringify(table), err => {
-              if(err) throw err;
-          })
-      }
+    },
+    handler: (argv) => {
+      let table = [
+        ...loadDatas("./datas/notes.json").filter(
+          (note) => note.title !== argv.title
+        ),
+      ];
+      console.log(table);
+      fs.writeFile("./datas/notes.json", JSON.stringify(table), (err) => {
+        if (err) throw err;
+        console.log("La note à été supprimée");
+      });
+    },
   })
-  .argv;
+  .command({
+    command: "read",
+    describe: "Commande permettant d'afficher la note souhaitée",
+    builder: {
+      title: {
+        describe: "Afficher la note souhaitée",
+        demandOption: true,
+        type: "string",
+      },
+    },
+    handler: (argv) => {
+      let notes = [
+        ...loadDatas("./datas/notes.json").filter(
+          (note) => note.title === argv.title
+        ),
+      ];
+    },
+  }).argv;

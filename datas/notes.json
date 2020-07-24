@@ -1,4 +1,5 @@
 [
-  { "title": "Titre de la note", "body": "Contenu de la note" },
-  { "title": "Note gfdsff2", "body": "blablabla" }
+  { "title": "Note", "body": "Ceci est une note" },
+  { "title": "Note 2", "body": "Ceci est aussi une note" },
+  { "title": "test 2", "body": "testest" }
 ]
